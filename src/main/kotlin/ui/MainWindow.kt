@@ -143,7 +143,7 @@ fun ContentWindow(
 }
 
 @Composable
-fun RateElement(rate: Rate, calculatedAmount: Double, onClick: () -> Unit) {
+fun RateElement(rate: Rate, calculatedAmount: String, onClick: () -> Unit) {
     val style = MaterialTheme.typography.h6
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,

@@ -1,12 +1,12 @@
 package data.util
 
+import java.text.DecimalFormat
 import kotlin.math.min
-import kotlin.math.roundToInt
 
 fun String.clearNumbers(fallback: String): String = try {
-    replace(",", ".").slice(0..min(9, length - 1)).toDouble().roundCurrency().toString()
+    replace(",", ".").slice(0..min(9, length - 1)).toDouble().roundCurrency()
 } catch (_: Exception) {
     fallback
 }
 
-fun Double.roundCurrency(): Double = (this * 100).roundToInt().toDouble() / 100
+fun Double.roundCurrency(): String = DecimalFormat("#0.00").format(this)
