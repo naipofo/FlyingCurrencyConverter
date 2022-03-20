@@ -1,5 +1,4 @@
 // Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -8,19 +7,18 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import di.mainModule
 import org.kodein.di.compose.withDI
-import ui.MainRoute
+import ui.AppNavigation
 
 @Composable
-@Preview
 fun App() = withDI(mainModule) {
-    MainRoute()
+    AppNavigation()
 }
 
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         title = "\uD83D\uDCB0 Flying Currency Converter \uD83D\uDCA8",
-        state = rememberWindowState(size = DpSize(400.dp, 600.dp)),
+        state = rememberWindowState(size = DpSize(450.dp, 600.dp)),
         resizable = false
     ) {
         App()

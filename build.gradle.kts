@@ -17,8 +17,15 @@ repositories {
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
+@OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
 dependencies {
-    implementation(compose.desktop.currentOs)
+    api(compose.runtime)
+    api(compose.foundation)
+    api(compose.material3)
+    api(compose.materialIconsExtended)
+
+    implementation("org.jetbrains.compose.material:material-icons-extended-desktop:1.1.1")
+    implementation("org.jetbrains.compose.material:material-icons-core-desktop:1.1.1")
 
     // Ktor - api access
     val ktorVersion = "2.0.0-beta-1"
@@ -33,6 +40,9 @@ dependencies {
     implementation("org.kodein.di:kodein-di-framework-compose:$kodeinVersion")
 
     testImplementation(kotlin("test"))
+
+    // has to be runtime or else there will be material 2 code completion
+    runtimeOnly(compose.desktop.currentOs)
 }
 
 tasks.test {

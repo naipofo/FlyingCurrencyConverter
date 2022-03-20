@@ -6,10 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -90,9 +89,8 @@ fun LoadingAnimation() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        CircularProgressIndicator()
+        // TODO: Loading animation
         Text("Ładowanie...")
-
     }
 }
 
@@ -122,7 +120,7 @@ fun ContentWindow(
 ) {
     Column {
         Row {
-            val textStyle = MaterialTheme.typography.h3.copy(fontFamily = FontFamily.Monospace)
+            val textStyle = MaterialTheme.typography.headlineLarge.copy(fontFamily = FontFamily.Monospace)
             BasicTextField(
                 state.inputString,
                 { onchange(it) },
@@ -134,9 +132,10 @@ fun ContentWindow(
         }
         LazyColumn(Modifier.weight(1f)) {
             items(state.rates) {
-                RateElement(it, ((state.inputValue * state.selectedRate.value) / it.value).roundCurrency()) {
-                    onChangeCurrency(it)
-                }
+                RateElement(
+                    it, ((state.inputValue * state.selectedRate.value) / it.value).roundCurrency(),
+                    { onChangeCurrency(it) },
+                )
             }
         }
     }
@@ -144,16 +143,16 @@ fun ContentWindow(
 
 @Composable
 fun RateElement(rate: Rate, calculatedAmount: String, onClick: () -> Unit) {
-    val style = MaterialTheme.typography.h6
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth().clickable { onClick() }
     ) {
+        Text("$calculatedAmount ${rate.code}", style = MaterialTheme.typography.labelLarge)
         Text(
-            if (rate.fullName.length > 22) {
-                rate.fullName.slice(0..19) + "..."
-            } else rate.fullName, style = style
+            rate.fullName,
+            maxLines = 1,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onBackground
         )
-        Text("$calculatedAmount ${rate.code}", style = style)
     }
 }
