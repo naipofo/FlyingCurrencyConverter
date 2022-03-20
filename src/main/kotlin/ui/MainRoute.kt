@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import data.Result
+import data.model.CurrencyCode
 import data.model.Rate
 import data.nbpapi.responses.NbpRepository
 import data.util.clearNumbers
@@ -47,7 +48,7 @@ fun MainRoute() {
                 inputString = "10.0",
                 inputValue = 10.0,
                 selectedRate = Rate(
-                    code = "PLN",
+                    code = CurrencyCode("PLN"),
                     value = 1.0,
                     fullName = ""
                 ),
@@ -96,7 +97,7 @@ fun ContentWindow(
                 textStyle = textStyle,
                 maxLines = 1,
             )
-            Text(state.selectedRate.code, style = textStyle)
+            Text(state.selectedRate.code.value, style = textStyle)
         }
         LazyColumn(Modifier.weight(1f)) {
             items(state.rates) {
@@ -115,7 +116,7 @@ fun RateElement(rate: Rate, calculatedAmount: String, onClick: () -> Unit) {
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth().clickable { onClick() }
     ) {
-        Text("$calculatedAmount ${rate.code}", style = MaterialTheme.typography.labelLarge)
+        Text("$calculatedAmount ${rate.code.value}", style = MaterialTheme.typography.labelLarge)
         Text(
             rate.fullName,
             maxLines = 1,

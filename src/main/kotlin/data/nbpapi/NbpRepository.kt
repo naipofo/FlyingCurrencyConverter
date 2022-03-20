@@ -1,6 +1,7 @@
 package data.nbpapi.responses
 
 import data.Result
+import data.model.CurrencyCode
 import data.model.CurrencyPricePoint
 import data.model.Rate
 import data.model.RateResponse
@@ -19,14 +20,25 @@ class NbpRepository(
     } catch (e: Exception) {
         Result.Error(e)
     }
+
+    suspend fun getHistoricalPricing(code: CurrencyCode): Result<List<CurrencyPricePoint>> = if (code.value == "PLN") {
+        Result.Success(listOf(CurrencyPricePoint(CurrencyCode("PLN"), "2000-02-02", 1.0)))
+    } else try {
+        Result.Success(api.getHistoricalPricing(code.value.lowercase()).rates.map { it.toModel(code) })
+    } catch (e: Exception) {
+        Result.Error(e)
+    }
 }
 
-private fun GoldPriceResponse.toModel() = CurrencyPricePoint(code = "GOLD", date = data, price = cena)
+private fun ApiHisRate.toModel(code: CurrencyCode) =
+    CurrencyPricePoint(code = code, date = effectiveDate, price = mid)
+
+private fun GoldPriceResponse.toModel() =
+    CurrencyPricePoint(code = CurrencyCode("GOLD"), date = data, price = cena)
 
 private fun NbpApiResponse.toModel(): RateResponse = RateResponse(
     date = effectiveDate,
     rates = listOf(
-        Rate("PLN", 1.0, "Polski złoty"),
-        Rate("PLD", 5.0, "Polski Dolar")
-    ) + rates.map { Rate(it.code, it.mid, it.currency) }
+        Rate(CurrencyCode("PLN"), 1.0, "Polski złoty"),
+    ) + rates.map { Rate(CurrencyCode(it.code), it.mid, it.currency) }
 )

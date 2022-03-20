@@ -12,4 +12,7 @@ class NbpApi(
 
     suspend fun getGoldPrices(): List<GoldPriceResponse> =
         client.get("https://api.nbp.pl/api/cenyzlota/last/255/?format=json").body()
+
+    suspend fun getHistoricalPricing(code: String): HistoricalDataResponse =
+        client.get("http://api.nbp.pl/api/exchangerates/rates/a/$code/last/255?format=json").body()
 }

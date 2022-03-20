@@ -1,7 +1,7 @@
 package data.model
 
 data class Rate(
-    val code: String,
+    val code: CurrencyCode,
     val value: Double,
     val fullName: String
 )
