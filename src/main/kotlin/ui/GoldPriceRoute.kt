@@ -61,8 +61,8 @@ fun GoldPriceScreen(
             modifier = Modifier.fillMaxWidth()
         )
         CurrencyChart(
-            Modifier.fillMaxSize().weight(1f).padding(vertical = 8.dp),
-            state.history
+            state.history,
+            Modifier.fillMaxSize().weight(1f).padding(vertical = 8.dp)
         )
     }
 }
