@@ -1,18 +1,17 @@
 package ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import data.Result
 import data.model.Rate
@@ -42,7 +41,6 @@ fun MainRoute() {
 
 
     fun loadData() = scope.launch {
-        println("loadingdata")
         uiState = when (val rates = repository.getRates()) {
             is Result.Error -> MainState.Error(rates.exception.localizedMessage.toString())
             is Result.Success -> MainState.Loaded(
@@ -63,7 +61,7 @@ fun MainRoute() {
     }
 
     when (val state = uiState) {
-        is MainState.Error -> ErrorWindow({ loadData() }, state.errorMessage)
+        is MainState.Error -> ErrorComponent({ loadData() }, state.errorMessage)
         is MainState.Loaded -> ContentWindow(
             onchange = {
                 uiState = try {
@@ -78,37 +76,7 @@ fun MainRoute() {
             onChangeCurrency = { uiState = state.copy(selectedRate = it) },
             state = state
         )
-        MainState.Loading -> LoadingAnimation()
-    }
-}
-
-@Composable
-fun LoadingAnimation() {
-    Column(
-        Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        // TODO: Loading animation
-        Text("Ładowanie...")
-    }
-}
-
-@Composable
-fun ErrorWindow(onReload: () -> Unit, message: String) {
-    Column(
-        Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Column(Modifier.background(Color.Red.copy(alpha = .4f))) {
-            Button({
-                onReload()
-            }) {
-                Text("Odświerz")
-            }
-            Text("Error: \n${message}")
-        }
+        MainState.Loading -> LoadingComponent()
     }
 }
 

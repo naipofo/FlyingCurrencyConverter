@@ -81,9 +81,9 @@ fun AppNavigation() {
 }
 
 val sidebar = listOf(
-    SidebarDestination("Exchange", Icons.Default.EuroSymbol, MainNavigationDestinations.Exchange),
-    SidebarDestination("Historical", Icons.Default.History, MainNavigationDestinations.Historical),
-    SidebarDestination("Gold price", Icons.Default.LocalOffer, MainNavigationDestinations.GoldPrice),
+    SidebarDestination("Kantor", Icons.Default.EuroSymbol, MainNavigationDestinations.Exchange),
+    SidebarDestination("Historyczne", Icons.Default.History, MainNavigationDestinations.Historical),
+    SidebarDestination("Cena Złota", Icons.Default.LocalOffer, MainNavigationDestinations.GoldPrice),
 )
 
 data class SidebarDestination(
