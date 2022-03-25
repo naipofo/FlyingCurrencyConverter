@@ -9,4 +9,4 @@ fun String.clearNumbers(fallback: String): String = try {
     fallback
 }
 
-fun Double.roundCurrency(): String = DecimalFormat("#0.00").format(this)
+fun Double.roundCurrency(): String = DecimalFormat("#0.00", DecimalFormatSymbols(Locale.US)).format(this)
