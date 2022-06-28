@@ -1,6 +1,8 @@
 package data.util
 
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
 import kotlin.math.min
 
 fun String.clearNumbers(fallback: String): String = try {

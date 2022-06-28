@@ -28,14 +28,14 @@ dependencies {
     implementation("org.jetbrains.compose.material:material-icons-core-desktop:1.2.0-alpha01-dev620")
 
     // Ktor - api access
-    val ktorVersion = "2.0.0-beta-1"
+    val ktorVersion = "2.0.2"
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
 
     // dependency injection
-    val kodeinVersion = "7.10.0"
+    val kodeinVersion = "7.12.0"
     implementation("org.kodein.di:kodein-di:$kodeinVersion")
     implementation("org.kodein.di:kodein-di-framework-compose:$kodeinVersion")
 
